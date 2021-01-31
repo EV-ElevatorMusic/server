@@ -20,7 +20,11 @@ class Chat(Resource):
         else:
             chat=dialogflow.predict(comment)
             if chat == None:
-                return abort(500,"error")
+                dialogflow.refresh_token()
+                chat=dialogflow.predict(comment)
+                if chat==None:
+                    return abort(500,"error")
+                
             return make_response(jsonify(chat=chat),200)
             
  
