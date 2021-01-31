@@ -1,11 +1,10 @@
 from flask import Flask
-import flask
-from flask_cors import  CORS, cross_origin
-from flask_restplus import Resource, Api
-
+from flask_cors import  CORS
 from BluePrint import chatbot
 import werkzeug
 werkzeug.cached_property = werkzeug.utils.cached_property
+from flask_restplus import Resource, Api
+
 app = Flask(__name__)
 
 
