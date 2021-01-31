@@ -1,22 +1,27 @@
-from flask import Flask,request,jsonify,abort,Blueprint
+from flask import Flask,request,jsonify,abort,Blueprint,make_response
 # from .dialogflow import Dialogflow
-
+from flask_restplus import Namespace,Resource
 from google.dialogflow import Dialogflow
-chatbot_api = Blueprint('chatbot',__name__,url_prefix='/')
+chatbot_api = Namespace('chatbot', description='Chatbot APIs')
+
 dialogflow=Dialogflow()
 
-@chatbot_api.route('/chatbot',methods=['GET'])
-def chat():
-    data=request.args
+@chatbot_api.route('/')
+
+class Chat(Resource):
+    @chatbot_api.doc(responses={200: 'Success', 404: 'Parameter is empty', 500: 'Server Error'}, params={'comment': '안녕'})
+    def get(self):
+        data=request.args
     
-    comment=data.get('comment')
-    if comment==None:
-        return jsonify(code=403,message="There is not comment")
-    else:
-        chat=dialogflow.predict(comment)
-        if chat == None:
-            return jsonify(code=403,message="error")
-        return jsonify(code=200,chat=chat)
-
-
+        comment=data.get('comment')
+        print(comment)
+        if comment==None:
+            return abort(404,"There is not comment")
+        else:
+            chat=dialogflow.predict(comment)
+            if chat == None:
+                return abort(500,"error")
+            return make_response(jsonify(chat=chat),200)
+            
+ 
 
