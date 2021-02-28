@@ -2,7 +2,7 @@ from flask import Flask
 from flask_cors import  CORS
 import werkzeug
 werkzeug.cached_property = werkzeug.utils.cached_property
-from BluePrint import chatbot
+from BluePrint import chatbot,music
 from flask_restplus import Resource, Api
 
 app = Flask(__name__)
@@ -11,6 +11,7 @@ app = Flask(__name__)
 CORS(app)
 api=Api(app)
 api.add_namespace(chatbot.chatbot_api,'/chatbot')
+api.add_namespace(music.music_api,'/music')
 
 
 if __name__=='__main__':

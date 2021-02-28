@@ -1,7 +1,7 @@
 from flask import Flask,request,jsonify,abort,Blueprint,make_response
 # from .dialogflow import Dialogflow
 from flask_restplus import Namespace,Resource
-from google.dialogflow import Dialogflow
+from apis.dialogflow import Dialogflow
 chatbot_api = Namespace('chatbot', description='Chatbot APIs')
 
 dialogflow=Dialogflow()
