@@ -10,6 +10,7 @@ spotify=Spotify()
 @music_api.route('/')
 
 class Chat(Resource):
+    @music_api.produces(["audio/mpeg3"])
     @music_api.doc(responses={200: 'Success', 404: 'Parameter is empty', 500: 'Server Error'})
     def get(self):
         #data=request.args
