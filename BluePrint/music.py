@@ -16,10 +16,9 @@ class Chat(Resource):
         #data=request.args
 
         music=Spotify()
-        music=music.getMusic('2G4AUqfwxcV1UdQjm2ouYr',9)
-        print(len(music))
-        return Response(music,mimetype='text/plain',direct_passthrough=True)
-        return make_response(jsonify(chat=music),200)
+        items=music.getMusic('2G4AUqfwxcV1UdQjm2ouYr',9)
+        
+        return make_response(items,200)
             
  
 

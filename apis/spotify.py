@@ -32,9 +32,15 @@ class Spotify:
 
         items=res.get('items')
         music_url=items[0].get('preview_url')
-        music=re.get(music_url).content
+        music_name=items[0].get('name')
+        artist_name=items[0].get('artists')[0].get('name')
 
-        return music
+        items={
+            "music_name":music_name,
+            "artist_name":artist_name,
+            "preview_url":music_url
+        }
+        return items
         
 if __name__=='__main__':
     spotify=Spotify()
