@@ -20,22 +20,33 @@ class Spotify:
         return token
         
     def getMusic(self,album_id,number):
-        url='https://api.spotify.com/v1/albums/'+album_id+'/tracks'
-        res=re.get(url,params={
-            'limit':1,
-            'offset':number-1,
-        },headers={
+        url='https://api.spotify.com/v1/albums/'+album_id
+        # res=re.get(url,params={
+        #     'limit':1,
+        #     'offset':number-1,
+        # },headers={
+        #     'Authorization': 'Bearer '+self.token
+        # })
+
+        res=re.get(url,headers={
             'Authorization': 'Bearer '+self.token
         })
         
         res=res.json()
+        cover=res.get('images')[0].get('url')
+        tracks=res.get('tracks')
+        items=tracks.get('items')
+        items=items[number-1]
+        
+        
+        
+        music_url=items.get('preview_url')
+        music_name=items.get('name')
+        artist_name=items.get('artists')[0].get('name')
 
-        items=res.get('items')
-        music_url=items[0].get('preview_url')
-        music_name=items[0].get('name')
-        artist_name=items[0].get('artists')[0].get('name')
-
+        
         items={
+            "cover_img":cover,
             "music_name":music_name,
             "artist_name":artist_name,
             "preview_url":music_url
