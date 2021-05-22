@@ -10,24 +10,33 @@ MASK = '<unused0>'
 SENT = '<unused1>'
 PAD = '<pad>'
 
-TOKENIZER = PreTrainedTokenizerFast.from_pretrained("skt/kogpt2-base-v2",
-            bos_token=BOS, eos_token=EOS, unk_token='<unk>',
-            pad_token=PAD, mask_token=MASK) 
 
-tok = TOKENIZER
 
 class emotion_analysis():
   def __init__(self,path,max_ids):
     self.model=load_model(path)
     self.max_ids=max_ids
+    U_TKN = '<usr>'
+    S_TKN = '<sys>'
+    BOS = '</s>'
+    EOS = '</s>'
+    MASK = '<unused0>'
+    SENT = '<unused1>'
+    PAD = '<pad>'
+
+    TOKENIZER = PreTrainedTokenizerFast.from_pretrained("skt/kogpt2-base-v2",
+            bos_token=BOS, eos_token=EOS, unk_token='<unk>',
+            pad_token=PAD, mask_token=MASK) 
+
+    self.tok = TOKENIZER
   def pred(self,words):
     data=self.word_to_encoded(words)
     pre=self.model.predict(data)
     return np.argmax(pre)
 
   def word_to_encoded(self,words):
-    toks=tok.tokenize(words)
-    tok_list=token=tok.convert_tokens_to_ids(toks)
+    toks=self.tok.tokenize(words)
+    tok_list=token=self.tok.convert_tokens_to_ids(toks)
     zero_list=np.zeros(self.max_ids+1)
 
     for i in tok_list:
