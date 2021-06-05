@@ -13,7 +13,12 @@ model=emotion_analysis('./models/emotion_classfication.h5',50432)
 class Chat(Resource):
     @music_api.doc(responses={200: 'Success', 404: 'Parameter is empty', 500: 'Server Error'})
     def get(self):
-        #data=request.args
+        data=request.args
+    
+        comment=data.get('comment')
+        if comment==None:
+            return abort(404,"There is not comment")
+        print(model.pred(comment))
         music=Spotify()
         items=music.getMusic('2G4AUqfwxcV1UdQjm2ouYr',9)
         
