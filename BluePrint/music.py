@@ -11,7 +11,7 @@ model=emotion_analysis('./models/emotion_classfication.h5',50432)
 @music_api.route('/')
 
 class Chat(Resource):
-    @music_api.doc(responses={200: 'Success', 404: 'Parameter is empty', 500: 'Server Error'})
+    @chatbot_api.doc(responses={200: 'Success', 404: 'Parameter is empty', 500: 'Server Error'}, params={'comment': '안녕'})
     def get(self):
         data=request.args
     
