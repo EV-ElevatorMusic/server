@@ -4,7 +4,7 @@ from flask_restplus import Namespace,Resource
 from apis.dialogflow import Dialogflow
 from apis.train_torch import KoGPT2Chat
 chatbot_api = Namespace('chatbot', description='Chatbot APIs')
-path='model_chp/model_-epoch=27-train_loss=20.78.ckpt'
+path='models/model.ckpt'
 model = KoGPT2Chat.load_from_checkpoint(path)
 dialogflow=Dialogflow()
 
