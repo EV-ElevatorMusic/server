@@ -3,7 +3,7 @@ from flask import Flask,request,jsonify,abort,Blueprint,make_response,Response
 from flask_restplus import Namespace,Resource
 from apis.spotify import Spotify
 from apis.emotion_classfication_model import emotion_analysis
-from db import db
+from apis.db import db
 
 music_api = Namespace('music', description='Music APIs')
 model=emotion_analysis('./models/emotion_classfication.h5',50432)
