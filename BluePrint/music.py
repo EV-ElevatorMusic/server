@@ -62,7 +62,7 @@ class Music_list(Resource):
                 d={'music_name':i['name'],'view':i['view'],'artist_name':i['artist_name'],'cover_img':i['cover_img']}
                 happy_musics.append(d)
         items={
-            'happy_musics':happy_musics,'mad_musics':mad_musics,'sad_musics':sad_musics,'message':'succes'
+            'happy_musics':happy_musics,'mad_musics':mad_musics,'sad_musics':sad_musics,
         }
         return make_response(items,200)
 
