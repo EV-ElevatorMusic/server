@@ -10,11 +10,11 @@ music_api = Namespace('music', description='Music APIs')
 model=emotion_analysis('./models/emotion_classfication.h5',50432)
 # spotify=Spotify()
 music_db=db['music']
-@music_api.route('/')
-
 # 0:기쁨
 # 1:분노
 # 2:슬픔
+
+@music_api.route('/')
 class Chat(Resource):
     @music_api.doc(responses={200: 'Success', 404: 'Parameter is empty', 500: 'Server Error'}, params={'comment': '안녕'})
     def get(self):
@@ -33,12 +33,20 @@ class Chat(Resource):
             music_list=music_db.find({'emotion':'sad'})
         music_list=list(music_list)
         song=random.choice(music_list)
+        key=song['music_key']
         print(song)
-        
         music=Spotify()
-        items=music.getMusic('2G4AUqfwxcV1UdQjm2ouYr',9)
+        items=music.getMusic('key',9)
         
         return make_response(items,200)
-            
- 
+
+@music_api.route('/music_list')      
+class Music_list(Resource):
+    def get(self):
+        musics=list(music_db.find())
+        items={
+            'musics':musics
+        }
+        return make_response(items,200)
+    
 
