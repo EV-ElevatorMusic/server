@@ -47,7 +47,7 @@ class Music_list(Resource):
         happy_musics=[]
         mad_musics=[]
         sad_musics=[]
-        for i in music_db.find(sort=( "view", 1 )):
+        for i in music_db.find(sort=[( "view", 1 )]):
             del i['_id']
             if i['emotion']=='sad':
                 sad_musics.append(i)
@@ -62,12 +62,11 @@ class Music_list(Resource):
 
 @music_api.route('/music_insert')      
 class Music_insert(Resource):
-    @music_api.doc(responses={200: 'Success', 500: 'Server Error'}, params={'pw':'pw','music_name':'music_name','music_key':'music_key','emotion':'emotion'})
+    @music_api.doc(responses={200: 'Success', 500: 'Server Error'}, params={'pw':'pw','name':'name','music_name':'music_name','music_key':'music_key','emotion':'emotion'})
     def get(self):
         data=request.args
         pw=data.get('pw')
         if base64.b64encode(pw.encode('euc-kr'))!=b'YWxzd25zMDIyMQ==':
-            print(base64.b64encode(pw.encode('euc-kr')))
             return make_response({'message':'wrong password'},400)
 
         name=data.get('name')
