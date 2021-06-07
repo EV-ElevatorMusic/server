@@ -5,7 +5,7 @@ from apis.spotify import Spotify
 from apis.emotion_classfication_model import emotion_analysis
 from apis.db import db
 import random
-
+import base64
 music_api = Namespace('music', description='Music APIs')
 model=emotion_analysis('./models/emotion_classfication.h5',50432)
 # spotify=Spotify()
@@ -49,5 +49,21 @@ class Music_list(Resource):
             'musics':musics
         }
         return make_response(items,200)
+
+@music_api.route('/music_insert')      
+class Music_insert(Resource):
+    @music_api.doc(responses={200: 'Success', 500: 'Server Error'}, params={})
+    def get(self):
+        data=request.args
+        pw=data.get('pw')
+        if base64.b64encode(pw.encode('euc-kr'))!='YWxzd25zMDIyMQ==':
+            return make_response({'message':'wrong password'},400)
+
+        name=data.get('name')
+        music_key=data.get('music_key')
+        emotion=data.get('emotion')
+        music_db.insert({'name':name,'music_key':music_key,'emotion':emotion, 'view':0})
+        
+        return make_response({},200)
     
 
