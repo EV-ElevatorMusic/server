@@ -78,14 +78,14 @@ class Music_insert(Resource):
         music_key=data.get('music_key')
         emotion=data.get('emotion')
         track_num=data.get('track_num')
-
+        track_num=int(track_num)
         music=Spotify()
         items=music.getMusic(music_key,track_num)
 
         name=items['music_name']
         artist_name=items['artist_name']
         cover_img=items['cover_img']
-        music_db.insert({'name':name,'artist_name':artist_name,'cover_img':cover_img,'music_key':music_key,'track_num':int(track_num),'emotion':emotion, 'view':0})
+        music_db.insert({'name':name,'artist_name':artist_name,'cover_img':cover_img,'music_key':music_key,'track_num':track_num,'emotion':emotion, 'view':0})
         
         return make_response({'message':'succes'},200)
     
