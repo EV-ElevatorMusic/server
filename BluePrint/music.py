@@ -34,7 +34,7 @@ class Chat(Resource):
         music_list=list(music_list)
         song=random.choice(music_list)
         key=song['music_key']
-        print(song)
+        track_num=song['track_num']
         music=Spotify()
         items=music.getMusic('key',9)
         
@@ -50,11 +50,15 @@ class Music_list(Resource):
         for i in music_db.find(sort=[( "view", 1 )]):
             del i['_id']
             if i['emotion']=='sad':
-                sad_musics.append(i)
+                d={'music_name':i['name'],'view':i['view']}
+                
+                sad_musics.append(d)
             elif i['emotion']=='mad':
-                mad_musics.append(i)
+                d={'music_name':i['name'],'view':i['view']}
+                mad_musics.append(d)
             elif i['emotion']=='happy':
-                happy_musics.append(i)
+                d={'music_name':i['name'],'view':i['view']}
+                happy_musics.append(d)
         items={
             'happy_musics':happy_musics,'mad_musics':mad_musics,'sad_musics':sad_musics
         }
@@ -62,7 +66,7 @@ class Music_list(Resource):
 
 @music_api.route('/music_insert')      
 class Music_insert(Resource):
-    @music_api.doc(responses={200: 'Success', 500: 'Server Error'}, params={'pw':'pw','name':'name','music_name':'music_name','music_key':'music_key','emotion':'emotion'})
+    @music_api.doc(responses={200: 'Success', 500: 'Server Error'}, params={'pw':'pw','name':'name','music_name':'music_name','music_key':'music_key','track_num':'track_num','emotion':'emotion'})
     def get(self):
         data=request.args
         pw=data.get('pw')
@@ -72,7 +76,10 @@ class Music_insert(Resource):
         name=data.get('name')
         music_key=data.get('music_key')
         emotion=data.get('emotion')
-        music_db.insert({'name':name,'music_key':music_key,'emotion':emotion, 'view':0})
+        track_num=data.get('track_num')
+
+        
+        music_db.insert({'name':name,'music_key':music_key,'track_num':track_num,'emotion':emotion, 'view':0})
         
         return make_response({},200)
     
