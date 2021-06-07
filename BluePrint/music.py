@@ -78,13 +78,13 @@ class Music_insert(Resource):
         music_key=data.get('music_key')
         emotion=data.get('emotion')
         track_num=data.get('track_num')
-        track_num=int(track_num)
 
         if not (emotion=='sad' or emotion=='happy' or emotion=='mad'):
             return make_response({'message':'emotion is wrong'},400)
             
         
         try:
+            track_num=int(track_num)
             music=Spotify()
             items=music.getMusic(music_key,track_num)
         except:
