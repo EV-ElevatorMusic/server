@@ -50,7 +50,7 @@ class Music_list(Resource):
         happy_musics=[]
         mad_musics=[]
         sad_musics=[]
-        for i in music_db.find(sort=[( "view", 1 )]):
+        for i in music_db.find(sort=[( "view", -1 )]):
             del i['_id']
             if i['emotion']=='sad':
                 d={'music_name':i['name'],'view':i['view'],'artist_name':i['artist_name'],'cover_img':i['cover_img']}               
