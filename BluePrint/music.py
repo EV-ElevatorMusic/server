@@ -44,9 +44,19 @@ class Chat(Resource):
 class Music_list(Resource):
     @music_api.doc(responses={200: 'Success', 500: 'Server Error'}, params={})
     def get(self):
-        musics=list(music_db.find())
+        happy_musics=[]
+        mad_musics=[]
+        sad_musics=[]
+        for i in music_db.find(sort=( "view", 1 )):
+            del i['_id']
+            if i['emotion']=='sad':
+                sad_musics.append(i)
+            elif i['emotion']=='mad':
+                mad_musics.append(i)
+            elif i['emotion']=='happy':
+                happy_musics.append(i)
         items={
-            'musics':musics
+            'happy_musics':happy_musics,'mad_musics':mad_musics,'sad_musics':sad_musics
         }
         return make_response(items,200)
 
