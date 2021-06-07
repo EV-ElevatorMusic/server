@@ -52,7 +52,7 @@ class Music_list(Resource):
 
 @music_api.route('/music_insert')      
 class Music_insert(Resource):
-    @music_api.doc(responses={200: 'Success', 500: 'Server Error'}, params={})
+    @music_api.doc(responses={200: 'Success', 500: 'Server Error'}, params={'pw':'pw','music_name':'music_name','music_key':'music_key','emotion':'emotion'})
     def get(self):
         data=request.args
         pw=data.get('pw')
