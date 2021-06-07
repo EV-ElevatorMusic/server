@@ -57,7 +57,8 @@ class Music_insert(Resource):
         data=request.args
         pw=data.get('pw')
         if base64.b64encode(pw.encode('euc-kr'))!='YWxzd25zMDIyMQ==':
-            return make_response({'message':'wrong password','c':base64.b64encode(pw.encode('euc-kr'))},400)
+            print(base64.b64encode(pw.encode('euc-kr')))
+            return make_response({'message':'wrong password'},400)
 
         name=data.get('name')
         music_key=data.get('music_key')
