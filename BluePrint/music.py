@@ -42,6 +42,7 @@ class Chat(Resource):
 
 @music_api.route('/music_list')      
 class Music_list(Resource):
+    @music_api.doc(responses={200: 'Success', 500: 'Server Error'}, params={})
     def get(self):
         musics=list(music_db.find())
         items={
