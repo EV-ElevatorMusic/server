@@ -80,7 +80,7 @@ class Music_insert(Resource):
         track_num=data.get('track_num')
 
         
-        music_db.insert({'name':name,'music_key':music_key,'track_num':track_num,'emotion':emotion, 'view':0})
+        music_db.insert({'name':name,'music_key':music_key,'track_num':int(track_num),'emotion':emotion, 'view':0})
         
         return make_response({'message':'succes'},200)
     
