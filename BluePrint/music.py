@@ -35,9 +35,11 @@ class Chat(Resource):
         song=random.choice(music_list)
         key=song['music_key']
         track_num=song['track_num']
-        music=Spotify()
-        items=music.getMusic('key',9)
+        music_db.update({'music_key':key},{'view',song['view']+1})
         
+        music=Spotify()
+        items=music.getMusic(key,track_num)
+
         return make_response(items,200)
 
 @music_api.route('/music_list')      
