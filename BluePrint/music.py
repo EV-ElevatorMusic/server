@@ -50,8 +50,7 @@ class Music_list(Resource):
         for i in music_db.find(sort=[( "view", 1 )]):
             del i['_id']
             if i['emotion']=='sad':
-                d={'music_name':i['name'],'view':i['view']}
-                
+                d={'music_name':i['name'],'view':i['view']}               
                 sad_musics.append(d)
             elif i['emotion']=='mad':
                 d={'music_name':i['name'],'view':i['view']}
@@ -60,7 +59,7 @@ class Music_list(Resource):
                 d={'music_name':i['name'],'view':i['view']}
                 happy_musics.append(d)
         items={
-            'happy_musics':happy_musics,'mad_musics':mad_musics,'sad_musics':sad_musics
+            'happy_musics':happy_musics,'mad_musics':mad_musics,'sad_musics':sad_musics,'message':'succes'
         }
         return make_response(items,200)
 
@@ -81,6 +80,6 @@ class Music_insert(Resource):
         
         music_db.insert({'name':name,'music_key':music_key,'track_num':track_num,'emotion':emotion, 'view':0})
         
-        return make_response({},200)
+        return make_response({'message':'succes'},200)
     
 
