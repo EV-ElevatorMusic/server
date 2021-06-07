@@ -30,6 +30,9 @@ class emotion_analysis():
 
     self.tok = TOKENIZER
   def pred(self,words):
+    # 0:기쁨
+    # 1:분노
+    # 2:슬픔
     data=self.word_to_encoded(words)
     pre=self.model.predict(data)
     return np.argmax(pre)

@@ -40,11 +40,7 @@ class Chat(Resource):
             return abort(404,"There is not comment")
         else:
             chat=model.chat(comment)
-            # if chat == None:
-            #     dialogflow.refresh_token()
-            #     chat=dialogflow.predict(comment)
-            #     if chat==None:
-            #         return abort(500,"error")
+            
             if chat==None:
                 return abort(500,"error")
                 
