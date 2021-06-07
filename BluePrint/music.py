@@ -4,6 +4,7 @@ from flask_restplus import Namespace,Resource
 from apis.spotify import Spotify
 from apis.emotion_classfication_model import emotion_analysis
 from apis.db import db
+import random
 
 music_api = Namespace('music', description='Music APIs')
 model=emotion_analysis('./models/emotion_classfication.h5',50432)
@@ -30,7 +31,9 @@ class Chat(Resource):
             music_list=music_db.find({'emotion':'mad'})
         elif emotion==2:
             music_list=music_db.find({'emotion':'sad'})
-        print(type(music_list))
+        music_list=list(music_list)
+        song=random.choice(music_list)
+        print(song)
         
         music=Spotify()
         items=music.getMusic('2G4AUqfwxcV1UdQjm2ouYr',9)
