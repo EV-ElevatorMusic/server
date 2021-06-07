@@ -75,13 +75,17 @@ class Music_insert(Resource):
         if base64.b64encode(pw.encode('euc-kr'))!=b'YWxzd25zMDIyMQ==':
             return make_response({'message':'wrong password'},400)
 
-        name=data.get('name')
         music_key=data.get('music_key')
         emotion=data.get('emotion')
         track_num=data.get('track_num')
 
-        
-        music_db.insert({'name':name,'music_key':music_key,'track_num':int(track_num),'emotion':emotion, 'view':0})
+        music=Spotify()
+        items=music.getMusic(music_key,track_num)
+
+        name=items['music_name']
+        artist_name=items['artist_name']
+        cover_img=items['cover_img']
+        music_db.insert({'name':name,'artist_name':artist_name,'cover_img':cover_img,'music_key':music_key,'track_num':int(track_num),'emotion':emotion, 'view':0})
         
         return make_response({'message':'succes'},200)
     
