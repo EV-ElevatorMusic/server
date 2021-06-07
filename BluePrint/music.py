@@ -35,7 +35,8 @@ class Chat(Resource):
         song=random.choice(music_list)
         key=song['music_key']
         track_num=song['track_num']
-        music_db.update({'music_key':key},{'view':song['view']+1})
+        song['view']+=1
+        music_db.replace_one({"_id":song['_id']},song)
 
         music=Spotify()
         items=music.getMusic(key,track_num)
@@ -67,7 +68,7 @@ class Music_list(Resource):
 
 @music_api.route('/music_insert')      
 class Music_insert(Resource):
-    @music_api.doc(responses={200: 'Success', 500: 'Server Error'}, params={'pw':'pw','name':'name','music_key':'music_key','track_num':'track_num','emotion':'emotion'})
+    @music_api.doc(responses={200: 'Success', 500: 'Server Error'}, params={'pw':'pw','music_key':'music_key','track_num':'track_num','emotion':'emotion'})
     def get(self):
         data=request.args
         pw=data.get('pw')
