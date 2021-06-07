@@ -53,13 +53,13 @@ class Music_list(Resource):
         for i in music_db.find(sort=[( "view", 1 )]):
             del i['_id']
             if i['emotion']=='sad':
-                d={'music_name':i['name'],'view':i['view']}               
+                d={'music_name':i['name'],'view':i['view'],'artist_name':i['artist_name'],'cover_img':i['cover_img']}               
                 sad_musics.append(d)
             elif i['emotion']=='mad':
-                d={'music_name':i['name'],'view':i['view']}
+                d={'music_name':i['name'],'view':i['view'],'artist_name':i['artist_name'],'cover_img':i['cover_img']}
                 mad_musics.append(d)
             elif i['emotion']=='happy':
-                d={'music_name':i['name'],'view':i['view']}
+                d={'music_name':i['name'],'view':i['view'],'artist_name':i['artist_name'],'cover_img':i['cover_img']}
                 happy_musics.append(d)
         items={
             'happy_musics':happy_musics,'mad_musics':mad_musics,'sad_musics':sad_musics,'message':'succes'
@@ -79,12 +79,22 @@ class Music_insert(Resource):
         emotion=data.get('emotion')
         track_num=data.get('track_num')
         track_num=int(track_num)
-        music=Spotify()
-        items=music.getMusic(music_key,track_num)
 
+        if not (emotion=='sad' or emotion=='happy' or emotion=='mad'):
+            return make_response({'message':'emotion is wrong'},400)
+            
+        
+        try:
+            music=Spotify()
+            items=music.getMusic(music_key,track_num)
+        except:
+            return make_response({'message':'param is wrong'},400)
+            
+        
         name=items['music_name']
         artist_name=items['artist_name']
         cover_img=items['cover_img']
+
         music_db.insert({'name':name,'artist_name':artist_name,'cover_img':cover_img,'music_key':music_key,'track_num':track_num,'emotion':emotion, 'view':0})
         
         return make_response({'message':'succes'},200)
