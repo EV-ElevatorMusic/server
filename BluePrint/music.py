@@ -50,6 +50,9 @@ class Music_list(Resource):
         happy_musics=[]
         mad_musics=[]
         sad_musics=[]
+        data=request.args
+        emotion=data.get('emotion')
+        
         for i in music_db.find(sort=[( "view", -1 )]):
             del i['_id']
             if i['emotion']=='sad':
@@ -61,9 +64,16 @@ class Music_list(Resource):
             elif i['emotion']=='happy':
                 d={'music_name':i['name'],'view':i['view'],'artist_name':i['artist_name'],'cover_img':i['cover_img']}
                 happy_musics.append(d)
-        items={
-            'happy_musics':happy_musics,'mad_musics':mad_musics,'sad_musics':sad_musics,
-        }
+        if emotion=="sad":
+            items={"musics":sad_musics}
+        elif emotion=="mad":
+            items={"musics":mad_musics}
+        elif emotion=="happy":
+            items={"musics":happy_musics}
+        else: return make_response({"message":"there is not emotion"},404)
+        # items={
+        #     'happy_musics':happy_musics,'mad_musics':mad_musics,'sad_musics':sad_musics,
+        # }
         return make_response(items,200)
 
 @music_api.route('/music_insert')      
@@ -81,9 +91,9 @@ class Music_insert(Resource):
 
         if not (emotion=='sad' or emotion=='happy' or emotion=='mad'):
             return make_response({'message':'emotion is wrong'},400)
-            
         
         try:
+
             track_num=int(track_num)
             music=Spotify()
             items=music.getMusic(music_key,track_num)
