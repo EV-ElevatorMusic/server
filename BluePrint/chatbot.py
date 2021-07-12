@@ -12,6 +12,7 @@ import base64
 chatbot_api = Namespace('chatbot', description='Chatbot APIs')
 path='models/model.ckpt'
 model = KoGPT2Chat.load_from_checkpoint(path)
+emotion_model=emotion_analysis('./models/emotion_classfication.h5',50432)
 dialogflow=Dialogflow()
 
 music_db=db['music']
@@ -64,7 +65,7 @@ class Chat(Resource):
                 return abort(500,"error")
             return make_response(jsonify(responsetype='chat',chat=chat),200)
     def recommend_music(self,comment):
-        emotion=model.pred(comment)
+        emotion=emotion_model.pred(comment)
 
         if emotion==0:
             music_list=music_db.find({'emotion':'happy'})
