@@ -44,7 +44,7 @@ class Chat(Resource):
         keyword_fill=False
         data=request.args
         comment=data.get('comment')
-        keyword=['기분 좋아','행복','안 좋아','속상','화나','짜증','기분 좋은','안 좋은','화나는']
+        keyword=['기분 좋아','기분좋아','행복','안 좋아','안좋아','속상','화나','짜증','기분 좋은','기분좋은','안 좋은','안좋은','화나는']
         
         
         if comment==None:
