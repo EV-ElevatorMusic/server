@@ -45,8 +45,6 @@ class emotion_analysis():
     for i in tok_list:
       zero_list[i]=1
       
-    x_data=[]
-    x_data.append(zero_list)
-    x_data=np.array(x_data)
-    return x_data
+    zero_list=zero_list.reshape(1,-1,1)  
+    return zero_list
   

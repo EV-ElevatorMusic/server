@@ -12,7 +12,7 @@ import base64
 chatbot_api = Namespace('chatbot', description='Chatbot APIs')
 path='models/model.ckpt'
 model = KoGPT2Chat.load_from_checkpoint(path)
-emotion_model=emotion_analysis('./models/emotion_classfication.h5',50432)
+emotion_model=emotion_analysis('./models/my_model2.h5',51013)
 dialogflow=Dialogflow()
 
 music_db=db['music']
