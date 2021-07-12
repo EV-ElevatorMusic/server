@@ -104,8 +104,8 @@ class Music_insert(Resource):
         name=items['music_name']
         artist_name=items['artist_name']
         cover_img=items['cover_img']
-
-        music_db.insert({'name':name,'artist_name':artist_name,'cover_img':cover_img,'music_key':music_key,'track_num':track_num,'emotion':emotion, 'view':0})
+        preview_url=items['preview_url']
+        music_db.insert({'name':name,'artist_name':artist_name,'cover_img':cover_img,'music_key':music_key,'track_num':track_num,'emotion':emotion, 'view':0,'preview_url':preview_url})
         
         return make_response({'message':'succes'},200)
     
