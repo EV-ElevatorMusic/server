@@ -45,7 +45,7 @@ class Chat(Resource):
 
 @music_api.route('/music_list')      
 class Music_list(Resource):
-    @music_api.doc(responses={200: 'Success', 500: 'Server Error'}, params={})
+    @music_api.doc(responses={200: 'Success', 500: 'Server Error'}, params={'emotion':'sad'})
     def get(self):
         happy_musics=[]
         mad_musics=[]
@@ -56,13 +56,13 @@ class Music_list(Resource):
         for i in music_db.find(sort=[( "view", -1 )]):
             del i['_id']
             if i['emotion']=='sad':
-                d={'music_name':i['name'],'view':i['view'],'artist_name':i['artist_name'],'cover_img':i['cover_img']}               
+                d={'music_name':i['name'],'view':i['view'],'artist_name':i['artist_name'],'cover_img':i['cover_img'],'preview_url':i['preview_url']}               
                 sad_musics.append(d)
             elif i['emotion']=='mad':
-                d={'music_name':i['name'],'view':i['view'],'artist_name':i['artist_name'],'cover_img':i['cover_img']}
+                d={'music_name':i['name'],'view':i['view'],'artist_name':i['artist_name'],'cover_img':i['cover_img'],'preview_url':i['preview_url']}
                 mad_musics.append(d)
             elif i['emotion']=='happy':
-                d={'music_name':i['name'],'view':i['view'],'artist_name':i['artist_name'],'cover_img':i['cover_img']}
+                d={'music_name':i['name'],'view':i['view'],'artist_name':i['artist_name'],'cover_img':i['cover_img'],'preview_url':i['preview_url']}
                 happy_musics.append(d)
         if emotion=="sad":
             items={"musics":sad_musics}
