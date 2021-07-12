@@ -7,7 +7,7 @@ from apis.db import db
 import random
 import base64
 music_api = Namespace('music', description='Music APIs')
-model=emotion_analysis('./models/emotion_classfication.h5',50432)
+# model=emotion_analysis('./models/emotion_classfication.h5',50432)
 # spotify=Spotify()
 music_db=db['music']
 # 0:기쁨
