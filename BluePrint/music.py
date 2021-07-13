@@ -85,7 +85,7 @@ class Like(Resource):
         if title==None:
             return make_response({'message':'title is empty'},400)
         for i in music_db.find({'name':title}):
-            i['view']+=1
+            i['like']+=1
             music_db.replace_one({"_id":i['_id']},i)      
             return make_response({'message':'success'},200)
         return make_response({'message':'title is wrong'},400)
