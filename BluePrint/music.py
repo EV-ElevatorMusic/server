@@ -90,6 +90,23 @@ class Like(Resource):
             return make_response({'message':'success'},200)
         return make_response({'message':'title is wrong'},400)
 
+@music_api.route('/cancel_like')      
+class Like_cancel(Resource):
+    @music_api.doc(responses={200: 'Success', 500: 'Server Error'}, params={'title':"BREATHE"})
+    def get(self):
+        data=request.args
+        title=data.get('title')
+        if title==None:
+            return make_response({'message':'title is empty'},400)
+        for i in music_db.find({'name':title}):
+            if i['like']<=0:
+                pass
+            else:
+                i['like']-=1
+            music_db.replace_one({"_id":i['_id']},i)      
+            return make_response({'message':'success'},200)
+        return make_response({'message':'title is wrong'},400)
+
 @music_api.route('/music_insert')      
 class Music_insert(Resource):
     @music_api.doc(responses={200: 'Success', 500: 'Server Error'}, params={'pw':'pw','music_key':'music_key','track_num':'track_num','emotion':'emotion'})
