@@ -53,7 +53,7 @@ class Music_list(Resource):
         data=request.args
         emotion=data.get('emotion')
         
-        for i in music_db.find(sort=[( "view", -1 )]):
+        for i in music_db.find(sort=[( "like", -1 )]):
             del i['_id']
             if i['emotion']=='sad':
                 d={'music_name':i['name'],'view':i['view'],'artist_name':i['artist_name'],'cover_img':i['cover_img'],'preview_url':i['preview_url']}               
@@ -75,6 +75,20 @@ class Music_list(Resource):
         #     'happy_musics':happy_musics,'mad_musics':mad_musics,'sad_musics':sad_musics,
         # }
         return make_response(items,200)
+
+@music_api.route('/like')      
+class Like(Resource):
+    @music_api.doc(responses={200: 'Success', 500: 'Server Error'}, params={'title':"Rollin'"})
+    def get(self):
+        data=request.args
+        title=data.get('title')
+        if title==None:
+            return make_response({'message':'title is empty'},400)
+        for i in music_db.find({'title':title}):
+            i['view']+=1
+            music_db.replace_one({"_id":i['_id']},i)      
+            return make_response({'message':'success'},200)
+        return make_response({'message':'title is wrong'},400)
 
 @music_api.route('/music_insert')      
 class Music_insert(Resource):
