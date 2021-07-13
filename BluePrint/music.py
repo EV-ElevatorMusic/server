@@ -78,7 +78,7 @@ class Music_list(Resource):
 
 @music_api.route('/like')      
 class Like(Resource):
-    @music_api.doc(responses={200: 'Success', 500: 'Server Error'}, params={'title':"Rollin'"})
+    @music_api.doc(responses={200: 'Success', 500: 'Server Error'}, params={'title':"BREATHE"})
     def get(self):
         data=request.args
         title=data.get('title')
