@@ -56,13 +56,13 @@ class Music_list(Resource):
         for i in music_db.find(sort=[( "like", -1 )]):
             del i['_id']
             if i['emotion']=='sad':
-                d={'music_name':i['name'],'view':i['view'],'artist_name':i['artist_name'],'cover_img':i['cover_img'],'preview_url':i['preview_url']}               
+                d={'music_name':i['name'],'view':i['view'],'artist_name':i['artist_name'],'cover_img':i['cover_img'],'preview_url':i['preview_url'],'like':i['like']}               
                 sad_musics.append(d)
             elif i['emotion']=='mad':
-                d={'music_name':i['name'],'view':i['view'],'artist_name':i['artist_name'],'cover_img':i['cover_img'],'preview_url':i['preview_url']}
+                d={'music_name':i['name'],'view':i['view'],'artist_name':i['artist_name'],'cover_img':i['cover_img'],'preview_url':i['preview_url'],'like':i['like']}
                 mad_musics.append(d)
             elif i['emotion']=='happy':
-                d={'music_name':i['name'],'view':i['view'],'artist_name':i['artist_name'],'cover_img':i['cover_img'],'preview_url':i['preview_url']}
+                d={'music_name':i['name'],'view':i['view'],'artist_name':i['artist_name'],'cover_img':i['cover_img'],'preview_url':i['preview_url'],'like':i['like']}
                 happy_musics.append(d)
         if emotion=="sad":
             items={"musics":sad_musics}
