@@ -62,6 +62,8 @@ class Chat(Resource):
         else:
             chat=model.chat(comment)        
             if chat==None:
+                model.load_from_checkpoint(path)
+                
                 return abort(500,"error")
             return make_response(jsonify(responsetype='chat',chat=chat),200)
     def recommend_music(self,comment):
