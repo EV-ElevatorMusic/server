@@ -44,7 +44,7 @@ class KoGPT2Chat(LightningModule):
                 torch.argmax(
                     pred,
                     dim=-1).squeeze().numpy().tolist())[-1]
-            if gen == EOS:
+            if gen == EOS or gen == PAD:
                 break
             a += gen.replace('▁', ' ')
         return a.strip()
